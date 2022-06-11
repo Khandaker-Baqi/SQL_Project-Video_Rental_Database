@@ -1,0 +1,33 @@
+# Querying count of films by rental rate with subquery based on CTE: "master_cte"
+
+SELECT
+film_sq.rental_rate,
+COUNT(DISTINCT film_sq.film_id)
+FROM(
+SELECT 
+master_cte.film_id,
+master_cte.title,
+master_cte.release_year,
+master_cte.category,
+master_cte.rental_rate,
+master_cte.rental_duration,
+master_cte.length,
+master_cte.rating,
+master_cte.language,
+master_cte.replacement_cost,
+master_cte.last_update,
+SUM(master_cte.amount),
+COUNT(DISTINCT master_cte.rental_id) AS no_of_rentals
+FROM master_cte
+GROUP BY master_cte.film_id,
+master_cte.title,
+master_cte.release_year,
+master_cte.category,
+master_cte.rental_rate,
+master_cte.rental_duration,
+master_cte.length,
+master_cte.rating,
+master_cte.language,
+master_cte.replacement_cost,
+master_cte.last_update) AS film_sq
+GROUP BY film_sq.rental_rate;
