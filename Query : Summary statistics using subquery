@@ -1,4 +1,4 @@
-# Finding summary statistics of all relevant numeric and categorical variables based on the CTE "masted_cte" with the use of subquery.
+# Querying summary statistics of all relevant numeric and categorical variables based on the CTE "masted_cte" with the use of subquery.
 
 SELECT
 AVG(film_sq.rental_duration) AS average_rental_duration,
