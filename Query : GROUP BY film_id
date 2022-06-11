@@ -1,0 +1,26 @@
+# Creating a table grouping the records by film_id and aggregating amount (sum) and rental_id (count).
+
+SELECT 
+master_cte.film_id,
+master_cte.title,
+master_cte.release_year,
+master_cte.category,
+master_cte.rental_rate,
+master_cte.rental_duration,
+master_cte.length,
+master_cte.rating,
+master_cte.language,
+master_cte.replacement_cost,
+SUM(master_cte.amount),
+COUNT(DISTINCT master_cte.rental_id)
+FROM master_cte
+GROUP BY master_cte.film_id,
+master_cte.title,
+master_cte.release_year,
+master_cte.category,
+master_cte.rental_rate,
+master_cte.rental_duration,
+master_cte.length,
+master_cte.rating,
+master_cte.language,
+master_cte.replacement_cost;
