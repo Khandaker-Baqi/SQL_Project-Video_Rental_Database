@@ -1,0 +1,17 @@
+# Querying films with no revenue
+
+SELECT master_cte.film_id,
+master_cte.title,
+master_cte.category,
+master_cte.rating,
+master_cte.rental_rate,
+COUNT(DISTINCT master_cte.rental_id) AS number_of_rentals,
+SUM(master_cte.amount) AS total_revenue
+FROM master_cte
+GROUP BY 
+master_cte.film_id,
+master_cte.title,
+master_cte.category,
+master_cte.rating,
+master_cte.rental_rate
+HAVING SUM(master_cte.amount) IS NULL;
