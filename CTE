@@ -1,0 +1,53 @@
+# Creating a CTE named "master_cte" that created a table with all relevant data joining multiple tables in the database for simplification of the folowwing analysis.
+
+WITH master_cte
+(
+payment_id,
+customer_id,
+rental_id,
+amount,
+film_id,
+title,
+rental_duration,
+rental_rate,
+length,
+rating,
+city,
+country,
+category,
+language,
+replacement_cost,
+release_year,
+last_update
+) AS
+(SELECT
+A . payment_id,
+A . customer_id,
+A . rental_id,
+A . amount,
+D . film_id,
+D . title,
+D . rental_duration,
+D . rental_rate,
+D . length,
+D . rating,
+G . city,
+H . country,
+J . name,
+K . name,
+D . replacement_cost,
+D . release_year,
+D . last_update
+FROM 
+ payment A LEFT JOIN rental B
+ ON A . rental_id = B . rental_id LEFT JOIN inventory C
+ ON B . inventory_id = C . inventory_id RIGHT JOIN film D
+ ON C . film_id = D . film_id LEFT JOIN customer E
+ ON A . customer_id = E . customer_id LEFT JOIN address F
+ ON E . address_id = F . address_id LEFT JOIN city G
+ ON F . city_id = G . city_id LEFT JOIN country H
+ ON G . country_id = H . country_id LEFT JOIN film_category I
+ ON D . film_id = I . film_id LEFT JOIN category J
+ ON I . category_id = J . category_id LEFT JOIN language K
+ ON D . language_id = K . language_id
+)
