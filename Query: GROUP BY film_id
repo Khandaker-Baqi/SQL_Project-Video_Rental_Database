@@ -1,4 +1,4 @@
-# Creating a table grouping the records by film_id and aggregating amount (sum) and rental_id (count).
+# Querying total revenue and number of rentals by film through grouping the records by film_id and aggregating amount (sum) and rental_id (count).
 
 SELECT 
 master_cte.film_id,
