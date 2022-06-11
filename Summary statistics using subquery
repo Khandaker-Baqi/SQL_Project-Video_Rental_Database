@@ -1,0 +1,46 @@
+# Finding summary statistics of all relevant numeric and categorical variables based on the CTE "masted_cte" with the use of subquery.
+
+SELECT
+AVG(film_sq.rental_duration) AS average_rental_duration,
+MAX(film_sq.rental_duration) AS maximum_rental_duration,
+MIN(film_sq.rental_duration) AS minimum_rental_duration,
+AVG(film_sq.rental_rate) AS average_rental_rate,
+MAX(film_sq.rental_rate) AS maximum_rental_rate,
+MIN(film_sq.rental_rate) AS minimum_rental_rate,
+AVG(film_sq.length) AS average_film_length,
+MAX(film_sq.length) AS maximum_film_length,
+MIN(film_sq.length) AS minimum_film_length,
+AVG(film_sq.replacement_cost) AS average_replacement_cost,
+MAX(film_sq.replacement_cost) AS maximum_replacement_cost,
+MIN(film_sq.replacement_cost) AS minimum_replacement_cost,
+MODE() WITHIN GROUP(ORDER BY film_sq.rating) AS modular_value_rating,
+MODE() WITHIN GROUP(ORDER BY film_sq.release_year) AS modular_value_release_year,
+MODE() WITHIN GROUP(ORDER BY film_sq.last_update) AS modular_value_last_update,
+MODE() WITHIN GROUP(ORDER BY film_sq.language) AS modular_value_language
+FROM(
+SELECT 
+master_cte.film_id,
+master_cte.title,
+master_cte.release_year,
+master_cte.category,
+master_cte.rental_rate,
+master_cte.rental_duration,
+master_cte.length,
+master_cte.rating,
+master_cte.language,
+master_cte.replacement_cost,
+master_cte.last_update,
+SUM(master_cte.amount),
+COUNT(DISTINCT master_cte.rental_id) AS no_of_rentals
+FROM master_cte
+GROUP BY master_cte.film_id,
+master_cte.title,
+master_cte.release_year,
+master_cte.category,
+master_cte.rental_rate,
+master_cte.rental_duration,
+master_cte.length,
+master_cte.rating,
+master_cte.language,
+master_cte.replacement_cost,
+master_cte.last_update) AS film_sq;
