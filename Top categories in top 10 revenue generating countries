@@ -1,0 +1,18 @@
+# Querying the by category revenue from top 10 revenue generating countries with subquery based on CTE : "master_cte".
+
+SELECT 
+master_cte.country,
+master_cte.category,
+SUM(master_cte.amount) AS revenue
+FROM master_cte
+WHERE master_cte.country IN 
+(SELECT
+master_cte.country
+FROM master_cte
+WHERE master_cte.country IS NOT NULL
+GROUP BY master_cte.country
+ORDER BY SUM(master_cte.amount) DESC
+LIMIT 10)
+GROUP BY 
+master_cte.country,
+master_cte.category;
